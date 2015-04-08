@@ -20,6 +20,7 @@ html = """\
 </html>
 """
 
+
 def sendTo(recipient):
     """ Sends an arbitrary email to the specified email address. """
     # Create message container
