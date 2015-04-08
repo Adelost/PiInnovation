@@ -1,5 +1,5 @@
-import Emailer
+import emailer
 import html_test
 
-# Emailer.sendTo("adelost@gmail.com")
+emailer.sendTo("adelost@gmail.com")
 html_test.testPost()
