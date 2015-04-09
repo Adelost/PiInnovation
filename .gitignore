@@ -58,3 +58,6 @@ target/
 
 # Custom
 .idea/
+
+# Some kind of temp file
+*.py~

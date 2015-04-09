@@ -3,7 +3,8 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-sender = "pi@ericsson.com"
+sender = "rbpimailbox@gmail.com"
+password = "rhubarbpie"
 
 # Setup message text
 # TODO: Convert html to plain text to prevent duplication
@@ -31,6 +32,8 @@ def sendTo(recipient):
     msg.attach(MIMEText(text, 'plain'))
     msg.attach(MIMEText(html, 'html'))
 
-    s = smtplib.SMTP('localhost')
+    s = smtplib.SMTP('smtp.gmail.com:587')
+    s.starttls()
+    s.login(sender,password)
     s.sendmail(sender, recipient, msg.as_string())
     s.quit()
