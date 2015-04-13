@@ -8,14 +8,16 @@ password = "rhubarbpie"
 
 # Setup message text
 # TODO: Convert html to plain text to prevent duplication
-text = "Hi!\nHow are you?\nHere is the link you wanted:\nhttp://www.python.org"
+# text = "Hi!\nHow are you?\nHere is the link you wanted:\nhttp://www.python.org"
+text = "Hi!\nYou have new post in your connected post box\n\nBest Regards\nEricsson post box"
 html = """\
 <html>
   <head></head>
   <body>
     <p>Hi!<br>
-       How are you?<br>
-       Here is the <a href="http://www.python.org">link</a> you wanted.
+       You have new post in your connected post box<br><br>
+    Best Regards<br>
+    Ericsson post box<br>
     </p>
   </body>
 </html>

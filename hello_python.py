@@ -1,11 +1,12 @@
 import emailer
-import html_test
+#import html_test
 
-emailer.sendTo("adelost@gmail.com")
+emailer.sendTo("nomanlatif@gmail.com")
 #html_test.testPost()
 
 """
 Installation instructions:
+sudo apt-get install python-setuptools
 sudo easy_install pip
 sudo pip install requests
 sudo apt-get install python3-pyside
