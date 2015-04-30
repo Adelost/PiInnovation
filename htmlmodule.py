@@ -20,4 +20,4 @@ def sendRecipientsAsPost(recipients, serverUrl):
     payload = json.dumps(payload)
     print("Payload:", payload)
     r = requests.post(serverUrl, data=payload)
-    print("Response:", r)
+    print("Response:", r.text)
