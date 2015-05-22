@@ -8,4 +8,4 @@ Installation (any step can be skipped if already installed):
 sudo apt-get install python-setuptools
 sudo easy_install pip
 sudo pip install requests
-sudo apt-get install python3-pyside
+sudo apt-get install python-pyside
