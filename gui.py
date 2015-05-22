@@ -110,6 +110,11 @@ class Gui(QMainWindow):
 
         htmlmodule.sendRecipientsAsPost(recipients, serverUrl)
 
+    def sendEmail(self):
+        recipients = self.getRecipients()
+
+        emailer.sendRecipientsAsPost(recipients, serverUrl)
+
 
 def setAttribute(fieldName, object, value, settings):
     setattr(object, fieldName, value)
