@@ -1,6 +1,8 @@
 # PiInnovation
 Secret Raspberry Pi connected postbox project.
 
+Use "runApp.sh" to start application.
+
 # Requirements on Linux:
 Pyside and Requests for Python.
 
