@@ -1,7 +1,7 @@
 from PySide import QtGui, QtCore
 from PySide.QtGui import *
 import htmlmodule
-
+import ssl
 
 class RestartGuiException(Exception):
     pass
