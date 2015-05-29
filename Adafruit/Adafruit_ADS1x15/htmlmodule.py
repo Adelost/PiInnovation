@@ -12,7 +12,7 @@ def sendRecipientsAsPost(recipients, serverUrl):
     for r in recipients:
         if not r:
             continue
-        d = {"Email": r}
+        d = {"Email": r, "Box_Id": "Box_1"}
         payload.append(d)
 
     """ Tests sending a HTTP Post request with payload. """

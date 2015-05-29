@@ -1,7 +1,9 @@
 from PySide import QtGui, QtCore
 from PySide.QtGui import *
 import htmlmodule
+import emailer
 import ssl
+
 
 class RestartGuiException(Exception):
     pass
