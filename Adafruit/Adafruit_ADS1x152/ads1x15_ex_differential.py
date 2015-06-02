@@ -14,14 +14,15 @@ ADS1115 = 0x01	# 16-bit ADC
 
 # Initialise the ADC using the default mode (use default I2C address)
 # Set this to ADS1015 or ADS1115 depending on the ADC you are using!
-adc = ADS1x15(ic=ADS1115)
+adc = ADS1x15(ic=ADS1015)
 
 # Read channels 2 and 3 in single-ended mode, at +/-4.096V and 250sps
-volts2 = adc.readADCSingleEnded(2, 4096, 250)/1000.0
-volts3 = adc.readADCSingleEnded(3, 4096, 250)/1000.0
+volts2 = adc.readADCSingleEnded(0, 4096, 250)/1000.0
+volts3 = adc.readADCSingleEnded(1, 4096, 250)/1000.0
 
 # Now do a differential reading of channels 2 and 3
-voltsdiff = adc.readADCDifferential23(4096, 250)/1000.0
+#voltsdiff = adc.readADCDifferential01(4096, 250)/1000.0
+voltsdiff = adc.readADCDifferential(0,1,6144,250)
 
 # Display the two different reading for comparison purposes
 print "%.8f %.8f %.8f %.8f" % (volts2, volts3, volts3-volts2, -voltsdiff)

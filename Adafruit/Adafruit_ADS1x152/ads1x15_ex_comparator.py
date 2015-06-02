@@ -17,7 +17,7 @@ ADS1115 = 0x01	# 16-bit ADC
 
 # Initialise the ADC using the default mode (use default I2C address)
 # Set this to ADS1015 or ADS1115 depending on the ADC you are using!
-adc = ADS1x15(ic=ADS1115)
+adc = ADS1x15(ic=ADS1015)
 
 # start comparator on channel 2 with a thresholdHigh=200mV and low=100mV
 # in traditional mode, non-latching, +/-1.024V and 250sps
