@@ -34,13 +34,12 @@ def sendTo(recipient):
     s.starttls()
     s.login(sender, password)
     print("Sent mail to:", recipient)
-    # s.sendmail(sender, recipient, msg.as_string())
+    s.sendmail(sender, recipient, msg.as_string())
     s.quit()
 
 
 def sendToAll(recipients):
 
-
-    for r in list:
-        sendTo(r)
+    for r in recipients:
+        sendTo(str(r))
 

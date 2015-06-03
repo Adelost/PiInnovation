@@ -2,7 +2,7 @@ from PySide import QtGui, QtCore
 from PySide.QtGui import *
 import htmlmodule
 import emailer
-import ssl
+from subprocess import call
 
 
 class RestartGuiException(Exception):
@@ -12,6 +12,8 @@ class RestartGuiException(Exception):
 class Gui(QMainWindow):
     settings = QtCore.QSettings("Ericsson", "Connected PostBox GUI")
     emailRecipients = "example@example.com"
+    shouldSendEmail = True
+    shouldSendAppNotifications = True
     serverUrl = "https://postbox-piinnovation.rhcloud.com/PostboxServer/api/v1/notification/notify"
 
     def __init__(self):
@@ -66,7 +68,7 @@ class Gui(QMainWindow):
         w.textChanged.connect(c)
 
         h = QHBoxLayout()
-        h.addWidget(self.createButton("Send Mail"))
+        # h.addWidget(self.createButton("Send Mail"))
         self.add(h)
 
         # Post
@@ -87,10 +89,46 @@ class Gui(QMainWindow):
         w = self.createButton("Send POST")
         w.clicked.connect(self.sendPost)
         self.add(w)
+        w.hide()
 
         # Reset button
         w = self.createButton("Reset Settings")
         w.clicked.connect(self.resetSettings)
+        w.hide()
+
+        # Create toggle box
+        self.createToggleBox("Notify with email", "shouldSendEmail")
+        self.createToggleBox("Notify with app", "shouldSendAppNotifications")
+
+        # Send notification button
+        w = self.createButton("Send Notification")
+        w.clicked.connect(self.sendPost)
+
+        # Run button
+        w = self.createButton("Run PostBox")
+        w.clicked.connect(self.runPostBox)
+
+    def runPostBox(self):
+        # self.close()
+        print("Run postbox!")
+        call(["./maraiDiff.sh", ""])
+        # raise RestartGuiException
+
+    def createToggleBox(self, label, fieldName):
+        def callback(state):
+            setAttribute(fieldName, callback.outer, state, callback.outer.settings)
+
+        c = callback
+        c.outer = self
+        c.fieldName = fieldName
+
+        w = QCheckBox(label, self)
+        state = getBoolAttribute(fieldName, self, self.settings)
+
+        w.setChecked(state)
+        w.toggled.connect(c)
+        self.add(w)
+        pass
 
     def resetSettings(self):
         self.settings.clear()
@@ -103,19 +141,26 @@ class Gui(QMainWindow):
         return l
 
     def getServerUrl(self):
-        text = self.serverWidget.text()
+        text = self.serverWidget.text() + "/PostboxServer/api/v1/notification/notify"
         return text
 
     def sendPost(self):
+        if self.shouldSendEmail:
+            self.sendEmail()
+        if self.shouldSendAppNotifications:
+            self.sendAppNotification()
+
+    def sendAppNotification(self):
+        print("Sending app notification...")
         recipients = self.getRecipients()
         serverUrl = self.getServerUrl()
 
         htmlmodule.sendRecipientsAsPost(recipients, serverUrl)
 
     def sendEmail(self):
+        print("Sending email notification...")
         recipients = self.getRecipients()
-
-        emailer.sendRecipientsAsPost(recipients, serverUrl)
+        emailer.sendToAll(recipients)
 
 
 def setAttribute(fieldName, object, value, settings):
@@ -137,3 +182,21 @@ def getAttribute(fieldName, object, settings):
     else:
         state = getattr(object, fieldName)
     return state
+
+
+def getBoolAttribute(fieldName, object, settings):
+    """Somehow booleans is stored as strings by default so special
+    care is needed to convert string back to boolean."""
+    # settings.setValue(fieldName, 0)
+    state = getBoolFromString(settings.value(fieldName))
+    if state is not None:
+        setattr(object, fieldName, state)
+    else:
+        state = getattr(object, fieldName)
+    return state
+
+
+def getBoolFromString(string):
+    if string == "true":
+        return True
+    return False
